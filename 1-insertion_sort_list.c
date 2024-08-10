@@ -7,24 +7,26 @@
 void insertion_sort_list(listint_t **list)
 {
 	listint_t *current;
-	listint_t *tmp;
+	//listint_t *tmp;
 
 	 if (!list || !*list || !(*list)->next)
         	return;
 	current = *list;
-	tmp = current;
 	while (current->next)
 	{
-		while (list && *list->n < current->n)
+		current = current->next;
+		while (current->next->n < current->n)
 		{
-		
-			if()tmp->next = current->next;
+			printf("xd1");
+			tmp = current;
+			tmp->next = current->next;
 			tmp->prev = current->prev;
-			current->next = current->next->next;
 			current->prev = current->next->prev;
-			current->next->prev = tmp->prev;
+			current->next = current->next->next;
 			current->next->next = tmp->next;
-		}
-	current = current->next;
+			current->next->prev = tmp->prev;
+			print_list(*list);
+			}	 
+		} 
 	}
 }
