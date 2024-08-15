@@ -1,32 +1,32 @@
 #include "main.h"
-#include <errno.h>
-#include <string.h>
 /**
  *
  *
  *
  */
-
-int main(int ac, char **av)
+int main(char **tokk)
 {
-	int i = 1;
+	int i = 0;
 	char* line = NULL;
 	size_t len = 0;
 	ssize_t read;
+	const char delim[] = " ";
+	pid_t child;
+	int status;
 
-/*	while(av[i] != NULL)
-	{
-		printf("%s ", av[i]);
-		i++;
-	} */
-	while (read != -1)
+	while (1)
 	{
 		printf("\n$ ");
 		read = getline (&line, &len, stdin);
-		printf("%s\n", line, read);
+		if (read == -1)
+			printf("error");
+		child = fork();
+		if (child == 0)
+		{
+			execve(comm[0], comm, NULL);	
+		}
+		else
+			wait(&status);
 	}
-		
-	if (read = -1)
-		printf("%d\n",errno);
 	return (0);
 }
