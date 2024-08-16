@@ -5,4 +5,5 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-int main(void);
+int main(int ac, char **av);
+int print_name(int ac, char **av);
