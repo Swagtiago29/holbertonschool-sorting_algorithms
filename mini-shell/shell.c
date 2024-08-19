@@ -92,6 +92,7 @@ int main(int ac, char **av)
 		read = getline(&line, &len, stdin);
 		if (read == EOF)
 		{
+			printf("bye-bye UnU");
 			putchar('\n');
 			break;
 		}
