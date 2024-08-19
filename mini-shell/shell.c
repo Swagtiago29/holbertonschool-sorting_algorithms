@@ -1,5 +1,30 @@
 #include "main.h"
 /**
+ *chaild - creates a child of function
+ *@comm: array of stings passed from main to execve
+ *Return: void
+ */
+void chaild(char **comm)
+{
+	int status;
+	pid_t child_pid;
+
+		child_pid = fork();
+		if (child_pid  == -1)
+		{
+			perror("fork");
+			exit(EXIT_FAILURE);
+		}
+		if (child_pid == 0)
+		{
+			execve(comm[0], comm, NULL);
+			perror("execve");
+			exit(EXIT_FAILURE);
+		}
+		else
+			wait(&status);
+}
+/**
  *print_user - prints name of the user and thanks
  *@argc: number of command-line arguments passed by the user
  *@argv: an array of strings passed by the user, first one being the program
@@ -31,6 +56,7 @@ char **tokenize(char *line, const char *delim)
 	if (tokens == NULL)
 	{
 		perror("malloc");
+		free(tokens);
 		exit(EXIT_FAILURE);
 	}
 	token = strtok(line, delim);
@@ -54,9 +80,9 @@ int main(int ac, char **av)
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t read;
-	const char delim[] = " ,\n";
-	pid_t child_pid;
-	int status;
+	const char delim[] = " ,\n, : ";
+/*	pid_t child_pid;
+	int status; */
 	char **comm;
 
 	print_user(ac, av);
@@ -64,10 +90,16 @@ int main(int ac, char **av)
 	{
 		printf("$ ");
 		read = getline(&line, &len, stdin);
+		if (read == EOF)
+		{
+			putchar('\n');
+			break;
+		}
 		if (read == -1)
 			printf("error");
 		comm = tokenize(line, delim);
-		child_pid = fork();
+		chaild(comm);
+/*		child_pid = fork();
 		if (child_pid  == -1)
 		{
 			perror("fork");
@@ -79,7 +111,8 @@ int main(int ac, char **av)
 			perror("execve");
 		}
 		else
-			wait(&status);
+			wait(&status); */
 	}
+	free(line);
 	return (0);
 }
