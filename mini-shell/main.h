@@ -1,3 +1,5 @@
+#ifndef MAIN_H
+#define MAIN_H
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -6,4 +8,4 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 int main(int ac, char **av);
-int print_name(int ac, char **av);
+#endif

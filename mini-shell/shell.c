@@ -4,7 +4,7 @@
  *@comm: array of stings passed from main to execve
  *Return: void
  */
-void chaild(char **comm)
+void syn(char **comm)
 {
 	int status;
 	pid_t child_pid;
@@ -80,40 +80,35 @@ int main(int ac, char **av)
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t read;
-	const char delim[] = " ,\n, : ";
-/*	pid_t child_pid;
-	int status; */
+	const char delim[] = " ,\n,\t";
 	char **comm;
+	int j = 0;
 
 	print_user(ac, av);
 	while (1)
 	{
-		printf("$ ");
+		if (av[1])
+			printf("%s$ ", av[1]);
+		else
+			printf("$ ");
 		read = getline(&line, &len, stdin);
 		if (read == EOF)
 		{
-			printf("bye-bye UnU");
+			if (av[1])
+				printf("\nbye-bye %s UnU", av[1]);
+			else
+				printf("\nbye-bye UnU");
 			putchar('\n');
 			break;
 		}
 		if (read == -1)
 			printf("error");
 		comm = tokenize(line, delim);
-		chaild(comm);
-/*		child_pid = fork();
-		if (child_pid  == -1)
-		{
-			perror("fork");
-			exit(EXIT_FAILURE);
-		}
-		if (child_pid == 0)
-		{
-			execve(comm[0], comm, NULL);
-			perror("execve");
-		}
-		else
-			wait(&status); */
+		syn(comm);
+		for (j = 0; comm[j] != NULL; j++)
+			free(comm[j]);
 	}
+	free(comm);
 	free(line);
 	return (0);
 }
